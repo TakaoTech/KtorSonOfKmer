@@ -8,6 +8,7 @@ plugins {
     kotlin("jvm") version "2.1.10"
     id("io.ktor.plugin") version "3.0.3"
     id("org.jetbrains.kotlin.plugin.serialization") version "2.1.10"
+    id("com.google.devtools.ksp") version "2.1.10-1.0.29"
 }
 
 group = "com.takaotech"
@@ -42,4 +43,6 @@ dependencies {
     implementation("ch.qos.logback:logback-classic:$logback_version")
     testImplementation("io.ktor:ktor-server-test-host")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
+    implementation("io.insert-koin:koin-annotations:2.0.0-RC1")
+    ksp("io.insert-koin:koin-ksp-compiler:2.0.0-RC1")
 }

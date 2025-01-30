@@ -1,23 +1,115 @@
-openapi: "3.0.3"
+openapi: 3.0.0
 info:
-  title: "Application API"
-  description: "Application API"
-  version: "1.0.0"
+  title: API Auto e Clienti
+  description: API per la gestione delle automobili e dei clienti
+  version: 1.0.0
 servers:
-  - url: "http://0.0.0.0:8080"
+  - url: http://localhost:8080
+    description: Server locale
 paths:
-  /:
+  /auto:
     get:
-      description: "Hello World!"
+      summary: Ottiene la lista di tutte le auto
+      operationId: getAllAuto
       responses:
         "200":
-          description: "OK"
+          description: Lista di automobili
           content:
-            text/plain:
+            application/json:
               schema:
-                type: "string"
-              examples:
-                Example#1:
-                  value: "Hello World!"
+                type: array
+                items:
+                  $ref: "#/components/schemas/AutoDTO"
+  /auto/{id}:
+    get:
+      summary: Ottiene un'auto per ID
+      operationId: getAutoById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Dettagli dell'auto
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AutoDTO"
+        "404":
+          description: Auto non trovata
+  /clienti:
+    get:
+      summary: Ottiene la lista di tutti i clienti
+      operationId: getAllClienti
+      responses:
+        "200":
+          description: Lista di clienti
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ClienteDTO"
+  /clienti/{id}:
+    get:
+      summary: Ottiene un cliente per ID
+      operationId: getClienteById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Dettagli del cliente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ClienteDTO"
+        "404":
+          description: Cliente non trovato
 components:
-  schemas: { }
+  schemas:
+    AutoDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+        marca:
+          type: string
+        modello:
+          type: string
+        targa:
+          type: string
+        anno_immatricolazione:
+          type: integer
+        chilometraggio:
+          type: integer
+        stato:
+          type: string
+        costo_giornaliero:
+          type: number
+          format: double
+    ClienteDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+        nome:
+          type: string
+        cognome:
+          type: string
+        email:
+          type: string
+        telefono:
+          type: string
+        indirizzo:
+          type: string
+        patente_numero:
+          type: string
+        data_scadenza_patente:
+          type: string
+          format: date
