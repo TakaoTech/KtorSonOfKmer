@@ -11,8 +11,8 @@ object Auto : IntIdTable("auto") {
     val targa = varchar("targa", 20).uniqueIndex()
     val annoImmatricolazione = integer("anno_immatricolazione")
     val chilometraggio = integer("chilometraggio")
-    val stato = enumerationByName("stato", 20, StatoAuto::class)
-    val costoGiornaliero = decimal("costo_giornaliero", 10, 2)
+    val stato = enumerationByName("stato", 20, StatoAuto::class).default(StatoAuto.DISPONIBILE)
+    val costoGiornaliero = double("costo_giornaliero")
 }
 
 class AutoEntity(id: EntityID<Int>) : IntEntity(id) {

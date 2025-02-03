@@ -44,5 +44,6 @@ dependencies {
     testImplementation("io.ktor:ktor-server-test-host")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
     implementation("io.insert-koin:koin-annotations:2.0.0-RC1")
+    implementation("io.github.serpro69:kotlin-faker:1.6.0")
     ksp("io.insert-koin:koin-ksp-compiler:2.0.0-RC1")
 }

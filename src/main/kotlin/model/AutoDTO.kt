@@ -28,3 +28,13 @@ data class AutoDTO(
         )
     }
 }
+
+@Serializable
+data class AutoCreateDTO(
+    @SerialName("marca") val marca: String,
+    @SerialName("modello") val modello: String,
+    @SerialName("targa") val targa: String,
+    @SerialName("anno_immatricolazione") val annoImmatricolazione: Int,
+    @SerialName("chilometraggio") val chilometraggio: Int,
+    @SerialName("costo_giornaliero") val costoGiornaliero: Double
+)
