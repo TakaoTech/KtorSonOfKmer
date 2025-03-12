@@ -10,7 +10,7 @@ fun main() {
 }
 
 fun Application.module() {
-//    configureSecurity()
+    configureSecurity()
     configureFrameworks()
     configureHTTP()
     configureDatabases()
