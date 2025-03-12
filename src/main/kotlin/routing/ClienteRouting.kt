@@ -4,29 +4,27 @@ import io.ktor.http.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import io.ktor.server.routing.get
 import model.ClienteCreateDTO
-import org.koin.ktor.ext.get
+import org.koin.ktor.ext.inject
 import repository.ClienteRepository
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 fun Routing.clienteRouting() {
+    val repository by inject<ClienteRepository>()
+
     route("/cliente") {
         get {
-            val repository = get<ClienteRepository>()
             call.respond(repository.getAll())
         }
 
         get("/{id}") {
             val id = call.parameters["id"]?.toIntOrNull()
-            val repository = get<ClienteRepository>()
             val cliente = id?.let { repository.getById(it) }
             if (cliente != null) call.respond(cliente) else call.respond(HttpStatusCode.NotFound)
         }
 
         post {
-            val repository = get<ClienteRepository>()
             val clienteCreateDTO = call.receive<ClienteCreateDTO>()
             val cliente = repository.add(clienteCreateDTO)
             call.respond(HttpStatusCode.Created)
@@ -35,7 +33,6 @@ fun Routing.clienteRouting() {
         delete("/{id}") {
             val id = call.parameters["id"]?.toIntOrNull()
             if (id != null) {
-                val repository = get<ClienteRepository>()
                 repository.delete(id)
                 call.respond(HttpStatusCode.NoContent)
             } else {
@@ -44,7 +41,6 @@ fun Routing.clienteRouting() {
         }
 
         get("/init") {
-            val repository = get<ClienteRepository>()
             val futureDate = LocalDate.now().plusYears(5)
             val formatter = DateTimeFormatter.ISO_LOCAL_DATE
 
@@ -65,7 +61,6 @@ fun Routing.clienteRouting() {
 
         get("/search/{term}/*") {
             val searchTerm = call.parameters["term"] ?: ""
-            val repository = get<ClienteRepository>()
             val allClients = repository.getAll()
 
             // Filter clients based on the search term
@@ -89,7 +84,6 @@ fun Routing.clienteRouting() {
         get("/filter/{field}/{value}/**") {
             val field = call.parameters["field"] ?: ""
             val value = call.parameters["value"] ?: ""
-            val repository = get<ClienteRepository>()
             val allClients = repository.getAll()
 
             // Get all remaining path parameters for additional filters
@@ -140,7 +134,6 @@ fun Routing.clienteRouting() {
         // /cliente/patente/CD789012 - Finds clients with license number matching the pattern
         get("/patente/{patente:([A-Z]{2}\\d{6})}") {
             val patenteNumero = call.parameters["patente"] ?: ""
-            val repository = get<ClienteRepository>()
             val allClients = repository.getAll()
 
             // Find clients with exact license number match
@@ -157,7 +150,6 @@ fun Routing.clienteRouting() {
         // /cliente/advanced-search/nome/mario/cognome/rossi - Search by name AND surname
         // /cliente/advanced-search/email/example.com/patente/AB123 - Search by email AND license
         get("/advanced-search/{...}") {
-            val repository = get<ClienteRepository>()
             val allClients = repository.getAll()
 
             // Get the tail part of the URL (everything after /advanced-search/)
