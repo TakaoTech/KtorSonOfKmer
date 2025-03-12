@@ -39,7 +39,14 @@ paths:
                 $ref: "#/components/schemas/AutoDTO"
         "404":
           description: Auto non trovata
-  /clienti:
+  /auto/init:
+    get:
+      summary: Inizializza un'auto con valori casuali
+      operationId: initAuto
+      responses:
+        "200":
+          description: Auto inizializzata con successo
+  /cliente:
     get:
       summary: Ottiene la lista di tutti i clienti
       operationId: getAllClienti
@@ -52,7 +59,19 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/ClienteDTO"
-  /clienti/{id}:
+    post:
+      summary: Crea un nuovo cliente
+      operationId: createCliente
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ClienteCreateDTO"
+      responses:
+        "201":
+          description: Cliente creato con successo
+  /cliente/{id}:
     get:
       summary: Ottiene un cliente per ID
       operationId: getClienteById
@@ -71,7 +90,223 @@ paths:
                 $ref: "#/components/schemas/ClienteDTO"
         "404":
           description: Cliente non trovato
+    delete:
+      summary: Elimina un cliente per ID
+      operationId: deleteCliente
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Cliente eliminato con successo
+        "400":
+          description: Formato ID non valido
+  /cliente/init:
+    get:
+      summary: Inizializza un cliente con valori predefiniti
+      operationId: initCliente
+      responses:
+        "201":
+          description: Cliente inizializzato con successo
+  /cliente/search/{term}/*:
+    get:
+      summary: Cerca clienti per termine
+      operationId: searchClienti
+      parameters:
+        - name: term
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Lista di clienti filtrati
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ClienteDTO"
+  /cliente/filter/{field}/{value}/**:
+    get:
+      summary: Filtra clienti per campo e valore con filtri aggiuntivi
+      operationId: filterClienti
+      parameters:
+        - name: field
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: value
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Lista di clienti filtrati
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ClienteDTO"
+  /cliente/patente/{patente}:
+    get:
+      summary: Trova clienti con un numero di patente specifico
+      operationId: getClientiByPatente
+      parameters:
+        - name: patente
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: "[A-Z]{2}\\d{6}"
+      responses:
+        "200":
+          description: Lista di clienti con patente corrispondente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ClienteDTO"
+  /cliente/advanced-search/{...}:
+    get:
+      summary: Ricerca avanzata di clienti con criteri multipli
+      operationId: advancedSearchClienti
+      responses:
+        "200":
+          description: Lista di clienti filtrati
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ClienteDTO"
+  /noleggio:
+    get:
+      summary: Ottiene la lista di tutti i noleggi
+      operationId: getAllNoleggi
+      security:
+        - basicAuth: [ ]
+      responses:
+        "200":
+          description: Lista di noleggi
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/NoleggioDTO"
+        "401":
+          description: Non autorizzato
+    post:
+      summary: Crea un nuovo noleggio
+      operationId: createNoleggio
+      security:
+        - basicAuth: [ ]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/NoleggioCreateDTO"
+      responses:
+        "201":
+          description: Noleggio creato con successo
+        "401":
+          description: Non autorizzato
+  /noleggio/{id}:
+    get:
+      summary: Ottiene un noleggio per ID
+      operationId: getNoleggioById
+      security:
+        - basicAuth: [ ]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Dettagli del noleggio
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NoleggioDTO"
+        "404":
+          description: Noleggio non trovato
+        "401":
+          description: Non autorizzato
+    delete:
+      summary: Elimina un noleggio per ID
+      operationId: deleteNoleggio
+      security:
+        - basicAuth: [ ]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Noleggio eliminato con successo
+        "400":
+          description: Formato ID non valido
+        "401":
+          description: Non autorizzato
+  /noleggio/init:
+    get:
+      summary: Inizializza un noleggio con valori predefiniti
+      operationId: initNoleggio
+      security:
+        - basicAuth: [ ]
+      responses:
+        "201":
+          description: Noleggio inizializzato con successo
+        "401":
+          description: Non autorizzato
+  /noleggio/filter/date/{startDate}/{endDate}:
+    get:
+      summary: Filtra noleggi per intervallo di date
+      operationId: filterNoleggiByDate
+      security:
+        - basicAuth: [ ]
+      parameters:
+        - name: startDate
+          in: path
+          required: true
+          schema:
+            type: string
+            format: date
+        - name: endDate
+          in: path
+          required: true
+          schema:
+            type: string
+            format: date
+      responses:
+        "200":
+          description: Lista di noleggi filtrati
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/NoleggioDTO"
+        "401":
+          description: Non autorizzato
 components:
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
   schemas:
     AutoDTO:
       type: object
@@ -90,6 +325,22 @@ components:
           type: integer
         stato:
           type: string
+        costo_giornaliero:
+          type: number
+          format: double
+    AutoCreateDTO:
+      type: object
+      properties:
+        marca:
+          type: string
+        modello:
+          type: string
+        targa:
+          type: string
+        anno_immatricolazione:
+          type: integer
+        chilometraggio:
+          type: integer
         costo_giornaliero:
           type: number
           format: double
@@ -113,3 +364,59 @@ components:
         data_scadenza_patente:
           type: string
           format: date
+    ClienteCreateDTO:
+      type: object
+      properties:
+        nome:
+          type: string
+        cognome:
+          type: string
+        email:
+          type: string
+        telefono:
+          type: string
+        indirizzo:
+          type: string
+        patente_numero:
+          type: string
+        data_scadenza_patente:
+          type: string
+          format: date
+    NoleggioDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+        cliente_id:
+          type: integer
+        auto_id:
+          type: integer
+        data_inizio:
+          type: string
+          format: date
+        data_fine:
+          type: string
+          format: date
+        costo_totale:
+          type: number
+          format: double
+        stato:
+          type: string
+    NoleggioCreateDTO:
+      type: object
+      properties:
+        cliente_id:
+          type: integer
+        auto_id:
+          type: integer
+        data_inizio:
+          type: string
+          format: date
+        data_fine:
+          type: string
+          format: date
+        costo_totale:
+          type: number
+          format: double
+        stato:
+          type: string
