@@ -3,6 +3,7 @@ package com.takaotech
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*
 import io.ktor.server.plugins.contentnegotiation.*
+import io.ktor.server.resources.*
 import kotlinx.serialization.json.Json
 import org.koin.ksp.generated.defaultModule
 import org.koin.ktor.plugin.Koin
@@ -13,6 +14,8 @@ fun Application.configureFrameworks() {
         slf4jLogger()
         defaultModule()
     }
+
+    install(Resources)
 
     install(ContentNegotiation) {
         json(
