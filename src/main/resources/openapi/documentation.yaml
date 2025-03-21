@@ -195,6 +195,23 @@ paths:
                 properties:
                   message:
                     type: string
+  /echo404:
+    get:
+      tags:
+        - Echo
+      summary: Echo service that simulates a 404 Not Found error
+      operationId: echo404
+      responses:
+        "404":
+          description: Simulated 404 Not Found error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Resource not found"
 components:
   schemas:
     AutoDTO:
