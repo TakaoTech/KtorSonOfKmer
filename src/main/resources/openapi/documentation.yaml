@@ -102,13 +102,16 @@ paths:
           application/json:
             schema:
               type: object
-            example:
-              name: "example"
-              value: 123
+            example: "            {
+              \"SimpleXmlObject\": {
+              \"id\": \"2\",
+              \"name\": \"Luca Bianchi\"
+            }
+          }"
           application/xml:
             schema:
               type: object
-            example: "<objects><object><id>1</id><name>new</name></object><object><id>2</id></object></objects>"
+            example: "<SimpleXmlObject><id>2</id><name>Luca Bianchi</name></SimpleXmlObject>"
       responses:
         "200":
           description: The echoed JSON/XML wrapped in a body object

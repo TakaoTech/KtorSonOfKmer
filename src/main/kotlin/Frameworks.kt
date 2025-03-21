@@ -19,6 +19,7 @@ fun Application.configureFrameworks() {
     install(Resources)
 
     install(ContentNegotiation) {
+        xml()
         json(
             Json {
                 prettyPrint = true
@@ -26,7 +27,5 @@ fun Application.configureFrameworks() {
                 ignoreUnknownKeys = true
             }
         )
-
-        xml()
     }
 }
