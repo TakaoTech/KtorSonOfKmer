@@ -71,6 +71,127 @@ paths:
                 $ref: "#/components/schemas/ClienteDTO"
         "404":
           description: Cliente non trovato
+  /echo:
+    post:
+      tags:
+        - Echo
+      summary: Echo service - returns the received text
+      operationId: echoText
+      requestBody:
+        required: true
+        content:
+          text/plain:
+            schema:
+              type: string
+      responses:
+        "200":
+          description: The echoed text
+          content:
+            text/plain:
+              schema:
+                type: string
+  /echoJson:
+    post:
+      tags:
+        - Echo
+      summary: Echo service for JSON/XML - returns the received JSON/XML
+      operationId: echoJson
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              name: "example"
+              value: 123
+          application/xml:
+            schema:
+              type: object
+            example: "<objects><object><id>1</id><name>new</name></object><object><id>2</id></object></objects>"
+      responses:
+        "200":
+          description: The echoed JSON/XML wrapped in a body object
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  body:
+                    type: object
+              example:
+                body:
+                  name: "example"
+                  value: 123
+            application/xml:
+              schema:
+                type: object
+                properties:
+                  body:
+                    type: object
+              example:
+                <response>
+                <body>
+                <name>example</name>
+                <value>123</value>
+                </body>
+                </response>
+  /echoForms:
+    post:
+      tags:
+        - Echo
+      summary: Echo service for form data - creates an account
+      operationId: echoForms
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  default: "samuele794"
+      responses:
+        "200":
+          description: Account creation confirmation message
+          content:
+            text/plain:
+              schema:
+                type: string
+  /echoUpload:
+    post:
+      tags:
+        - Echo
+      summary: Echo service for file upload - returns the uploaded file as a download
+      operationId: echoUpload
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        "200":
+          description: The uploaded file as a download
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+        "400":
+          description: No file uploaded
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
 components:
   schemas:
     AutoDTO:

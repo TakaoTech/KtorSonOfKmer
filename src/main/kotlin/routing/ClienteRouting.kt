@@ -18,18 +18,18 @@ fun Routing.clienteRouting() {
             call.respond(repository.getAll())
         }
 
-        get("/{id}") {
-            val id = call.parameters["id"]?.toIntOrNull()
-            val repository = get<ClienteRepository>()
-            val cliente = id?.let { repository.getById(it) }
-            if (cliente != null) call.respond(cliente) else call.respond(HttpStatusCode.NotFound)
-        }
-
         post {
             val repository = get<ClienteRepository>()
             val clienteCreateDTO = call.receive<ClienteCreateDTO>()
             val cliente = repository.add(clienteCreateDTO)
             call.respond(HttpStatusCode.Created)
+        }
+
+        get("/{id}") {
+            val id = call.parameters["id"]?.toIntOrNull()
+            val repository = get<ClienteRepository>()
+            val cliente = id?.let { repository.getById(it) }
+            if (cliente != null) call.respond(cliente) else call.respond(HttpStatusCode.NotFound)
         }
 
         delete("/{id}") {
