@@ -8,6 +8,14 @@ KtorSonOfKmer is a demonstration project showcasing how to build a modern web AP
 
 This project was created using the [Ktor Project Generator](https://start.ktor.io).
 
+## Utils
+
+https://websocketking.com/
+
+ws://127.0.0.1:8080/echo
+ws://127.0.0.1:8080/echoShared
+ws://127.0.0.1:8080/echoSerial
+
 ## Technologies Used
 
 | Technology | Purpose |
