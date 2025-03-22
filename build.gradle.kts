@@ -18,7 +18,7 @@ application {
     mainClass.set("com.takaotech.ApplicationKt")
 
     val isDevelopment: Boolean = project.ext.has("development")
-    applicationDefaultJvmArgs = listOf("-Dio.ktor.development=$isDevelopment")
+    applicationDefaultJvmArgs = listOf("-Dio.ktor.development=true")
 }
 
 repositories {
@@ -30,15 +30,18 @@ dependencies {
     implementation("io.ktor:ktor-server-auth")
     implementation("io.ktor:ktor-server-content-negotiation")
     implementation("io.ktor:ktor-serialization-kotlinx-json")
+    implementation("io.ktor:ktor-serialization-kotlinx-xml")
+    implementation("io.ktor:ktor-server-call-logging")
     implementation("io.ktor:ktor-server-resources")
     implementation("io.ktor:ktor-server-sessions")
+    implementation("io.ktor:ktor-server-status-pages")
     implementation("io.ktor:ktor-server-swagger")
-    implementation("io.ktor:ktor-server-cors")
     implementation("org.jetbrains.exposed:exposed-core:$exposed_version")
     implementation("org.jetbrains.exposed:exposed-jdbc:$exposed_version")
     implementation("org.jetbrains.exposed:exposed-kotlin-datetime:$exposed_version")
     implementation("org.jetbrains.exposed:exposed-money:$exposed_version")
     implementation("com.h2database:h2:$h2_version")
+    implementation("io.ktor:ktor-server-cors")
     implementation("io.insert-koin:koin-ktor3:$koin_version")
     implementation("io.insert-koin:koin-logger-slf4j:$koin_version")
     implementation("io.ktor:ktor-server-tomcat-jakarta")

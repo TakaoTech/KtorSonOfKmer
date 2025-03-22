@@ -1,6 +1,7 @@
 package com.takaotech
 
 import io.ktor.serialization.kotlinx.json.*
+import io.ktor.serialization.kotlinx.xml.*
 import io.ktor.server.application.*
 import io.ktor.server.plugins.contentnegotiation.*
 import io.ktor.server.resources.*
@@ -18,6 +19,7 @@ fun Application.configureFrameworks() {
     install(Resources)
 
     install(ContentNegotiation) {
+        xml()
         json(
             Json {
                 prettyPrint = true
