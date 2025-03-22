@@ -30,13 +30,6 @@ fun Routing.clienteRouting() {
             call.respond(HttpStatusCode.Created)
         }
 
-        get("/{id}") {
-            val id = call.parameters["id"]?.toIntOrNull()
-            val repository = get<ClienteRepository>()
-            val cliente = id?.let { repository.getById(it) }
-            if (cliente != null) call.respond(cliente) else call.respond(HttpStatusCode.NotFound)
-        }
-
         delete("/{id}") {
             val id = call.parameters["id"]?.toIntOrNull()
             if (id != null) {
