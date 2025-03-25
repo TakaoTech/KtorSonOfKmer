@@ -1,12 +1,9 @@
 # KtorSonOfKmer - Car Management API
 
+This project is linked to the presentation available
+at: https://docs.google.com/presentation/d/1c1mFfeYFlwrpy_DwFGpHq0F4GRCDfG0-X-tbIWMHBvU/edit?usp=sharing
+
 This project is a RESTful API for managing car/automobile data, built with Ktor framework. It provides endpoints for retrieving and creating car information.
-
-## Project Overview
-
-KtorSonOfKmer is a demonstration project showcasing how to build a modern web API using Kotlin and Ktor. The application manages automobile data with fields like brand, model, license plate, registration year, mileage, status, and daily cost.
-
-This project was created using the [Ktor Project Generator](https://start.ktor.io).
 
 ## Utils
 
@@ -27,45 +24,45 @@ ws://127.0.0.1:8080/echoSerial
 | [kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization) | JSON serialization/deserialization |
 | [Swagger](https://swagger.io/) | API documentation |
 
-## Project Structure
-
-```
-src/
-├── main/
-│   ├── kotlin/
-│   │   ├── com/takaotech/
-│   │   │   ├── Application.kt       # Main application entry point
-│   │   │   ├── Databases.kt         # Database configuration
-│   │   │   ├── Frameworks.kt        # Framework configuration (Koin)
-│   │   │   ├── HTTP.kt              # HTTP configuration (Swagger)
-│   │   │   └── Routing.kt           # Main routing configuration
-│   │   ├── model/
-│   │   │   └── AutoDTO.kt           # Data transfer objects
-│   │   ├── repository/
-│   │   │   └── AutoRepository.kt    # Data access layer
-│   │   ├── routing/
-│   │   │   └── AutoRouting.kt       # API endpoint definitions
-│   │   └── tables/
-│   │       └── Auto.kt              # Database table definitions
-│   └── resources/
-│       └── openapi/                 # API documentation
-└── test/
-    └── kotlin/                      # Test classes
-```
 
 ## API Endpoints
 
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/auto` | GET | Retrieve all cars |
-| `/auto/{id}` | GET | Retrieve a specific car by ID |
-| `/auto/init` | GET | Initialize a new car with random data (for testing) |
+### Auto Endpoints
+| Endpoint     | Method | Description                                         |
+|--------------|--------|-----------------------------------------------------|
+| `/auto`      | GET    | Retrieve all cars                                   |
+| `/auto/{id}` | GET    | Retrieve a specific car by ID                       |
+| `/auto/init` | GET    | Initialize a new car with random data (for testing) |
+
+### Cliente Endpoints
+
+| Endpoint        | Method | Description                      |
+|-----------------|--------|----------------------------------|
+| `/cliente`      | GET    | Retrieve all clients             |
+| `/cliente/{id}` | GET    | Retrieve a specific client by ID |
+| `/cliente`      | POST   | Create a new client              |
+
+### Noleggio Endpoints
+
+| Endpoint         | Method | Description                      |
+|------------------|--------|----------------------------------|
+| `/noleggio`      | GET    | Retrieve all rentals             |
+| `/noleggio/{id}` | GET    | Retrieve a specific rental by ID |
+| `/noleggio`      | POST   | Create a new rental              |
+
+### Echo and Websocket Endpoints
+
+| Endpoint      | Method    | Description                    |
+|---------------|-----------|--------------------------------|
+| `/echo`       | WebSocket | Echo WebSocket endpoint        |
+| `/echoShared` | WebSocket | Shared Echo WebSocket endpoint |
+| `/echoSerial` | WebSocket | Serial Echo WebSocket endpoint |
 
 ## Setup and Installation
 
 ### Prerequisites
 
-- JDK 11 or higher
+- JDK 17 or higher
 - Gradle
 
 ### Running the Application
